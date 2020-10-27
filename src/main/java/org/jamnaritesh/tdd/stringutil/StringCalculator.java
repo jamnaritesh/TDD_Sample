@@ -3,6 +3,7 @@ package org.jamnaritesh.tdd.stringutil;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class StringCalculator {
@@ -15,11 +16,15 @@ public class StringCalculator {
         String delimiter = ","; // Default assume , as delimiter
 
         if (number.startsWith("//")) {
-            delimiter = String.valueOf(number.charAt(2));
-            number = number.substring(5, number.length());
+            if (number.contains("[")) {
+                delimiter = getDelimiter(number);
+            } else {
+                delimiter = String.valueOf(number.charAt(2));
+            }
+            number = number.substring(number.indexOf("\n") + 1);
         }
         String sanitized = replaceNewLine(number, delimiter);
-        int[] numbers = Arrays.stream(sanitized.split(delimiter)).mapToInt(Integer::parseInt).filter(e -> e <= 1000).toArray();
+        int[] numbers = Arrays.stream(sanitized.split(Pattern.quote(delimiter))).mapToInt(Integer::parseInt).filter(e -> e <= 1000).toArray();
 
         if (Arrays.stream(numbers).anyMatch(e -> e < 0)) {
             String negativeNumbers = Arrays.stream(numbers).filter(e -> e < 0).mapToObj(Objects::toString).collect(Collectors.joining(","));
@@ -28,6 +33,10 @@ public class StringCalculator {
 
         int sum = Arrays.stream(numbers).sum();
         return sum;
+    }
+
+    private String getDelimiter(String number) {
+        return number.substring(number.indexOf("[") + 1, number.indexOf("]"));
     }
 
     public int getCalledCount() {

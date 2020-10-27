@@ -30,7 +30,7 @@ public class StringCalculatorTest {
 
     @Test
     public void AcceptDelimiter() throws InvalidInputException {
-        Assert.assertEquals(3, calculator.add("//;\\n1;2"));
+        Assert.assertEquals(3, calculator.add("//;\n1;2"));
     }
 
     @Test
