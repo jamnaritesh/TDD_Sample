@@ -6,7 +6,10 @@ import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 public class StringCalculator {
+    private int calledCount = 0;
+
     public int add(String number) throws InvalidInputException {
+        calledCount++;
         if (number.equals(""))
             return 0;
         String delimiter = ","; // Default assume , as delimiter
@@ -27,8 +30,8 @@ public class StringCalculator {
         return sum;
     }
 
-    public int getCalledCount(){
-        return 0;
+    public int getCalledCount() {
+        return calledCount;
     }
 
     private String replaceNewLine(String str, String delimiter) {
