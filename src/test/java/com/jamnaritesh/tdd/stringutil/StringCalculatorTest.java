@@ -33,8 +33,25 @@ public class StringCalculatorTest {
         Assert.assertEquals(3, calculator.add("//;\\n1;2"));
     }
 
-    @Test(expected = InvalidInputException.class)
+    @Test
     public void throwInvalidInputExceptionWhenInputHasNegativeNumbers() throws InvalidInputException {
-        calculator.add("-1,2,3");
+        String message = "negatives not allowed :-1";
+        try {
+            calculator.add("-1,2,3");
+        }
+        catch (InvalidInputException e){
+            Assert.assertEquals(message, e.getMessage());
+        }
+    }
+
+    @Test
+    public void addAllNegativesToExceptionMessage() throws InvalidInputException {
+        String message = "negatives not allowed :-1,-3";
+        try {
+            calculator.add("-1,2,-3");
+        }
+        catch (InvalidInputException e){
+            Assert.assertEquals(message, e.getMessage());
+        }
     }
 }
