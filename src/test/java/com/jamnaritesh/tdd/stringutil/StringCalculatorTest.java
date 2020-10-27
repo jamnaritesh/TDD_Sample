@@ -74,4 +74,10 @@ public class StringCalculatorTest {
     public void allowMultipleDelimiters() throws InvalidInputException {
         Assert.assertEquals(6, calculator.add("//[*][%]\n1*2%3"));
     }
+
+    @Test
+    public void allowMultiLenghtMultipleDelimiters() throws InvalidInputException {
+        Assert.assertEquals(6, calculator.add("//[**][%%]\n1**2%%3"));
+
+    }
 }
