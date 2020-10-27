@@ -38,8 +38,7 @@ public class StringCalculatorTest {
         String message = "negatives not allowed :-1";
         try {
             calculator.add("-1,2,3");
-        }
-        catch (InvalidInputException e){
+        } catch (InvalidInputException e) {
             Assert.assertEquals(message, e.getMessage());
         }
     }
@@ -49,16 +48,20 @@ public class StringCalculatorTest {
         String message = "negatives not allowed :-1,-3";
         try {
             calculator.add("-1,2,-3");
-        }
-        catch (InvalidInputException e){
+        } catch (InvalidInputException e) {
             Assert.assertEquals(message, e.getMessage());
         }
     }
 
     @Test
     public void onGetCountReceiveReturnAddCount() throws InvalidInputException {
-        StringCalculator calculator =  new StringCalculator();
+        StringCalculator calculator = new StringCalculator();
         calculator.add("");
-        Assert.assertEquals(1,calculator.getCalledCount());
+        Assert.assertEquals(1, calculator.getCalledCount());
+    }
+
+    @Test
+    public void ignoreNumbersGreaterThanOneThousand() throws InvalidInputException {
+        Assert.assertEquals(2, calculator.add("2,1002"));
     }
 }
