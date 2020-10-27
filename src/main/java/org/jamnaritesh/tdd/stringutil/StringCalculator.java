@@ -1,7 +1,9 @@
 package org.jamnaritesh.tdd.stringutil;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 public class StringCalculator {
     public int add(String number) throws InvalidInputException {
@@ -17,8 +19,8 @@ public class StringCalculator {
         int[] numbers = Arrays.stream(sanitized.split(delimiter)).mapToInt(Integer::parseInt).toArray();
 
         if (Arrays.stream(numbers).anyMatch(e -> e < 0)) {
-            Integer negativeNumber = Arrays.stream(numbers).filter(e -> e < 0).findFirst().orElse(0);
-            throw new InvalidInputException("negatives not allowed :" + negativeNumber.toString());
+            String negativeNumbers = Arrays.stream(numbers).filter(e -> e < 0).mapToObj(Objects::toString).collect(Collectors.joining(","));
+            throw new InvalidInputException("negatives not allowed :" + negativeNumbers);
         }
 
         int sum = Arrays.stream(numbers).sum();
