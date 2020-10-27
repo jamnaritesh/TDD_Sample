@@ -69,4 +69,9 @@ public class StringCalculatorTest {
     public void delimiterCanBeOfAnyLength() throws InvalidInputException {
         Assert.assertEquals(6, calculator.add("//[***]\n1***2***3"));
     }
+
+    @Test
+    public void allowMultipleDelimiters() throws  InvalidInputException{
+        Assert.assertEquals(6,calculator.add("//[*][%]\n1*2%3"));
+    }
 }
