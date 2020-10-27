@@ -64,4 +64,9 @@ public class StringCalculatorTest {
     public void ignoreNumbersGreaterThanOneThousand() throws InvalidInputException {
         Assert.assertEquals(2, calculator.add("2,1002"));
     }
+
+    @Test
+    public void delimiterCanBeOfAnyLength() throws InvalidInputException {
+        Assert.assertEquals(6, calculator.add("//[***]\n1***2***3"));
+    }
 }
