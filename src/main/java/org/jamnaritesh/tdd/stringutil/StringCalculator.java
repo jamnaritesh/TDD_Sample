@@ -1,6 +1,7 @@
 package org.jamnaritesh.tdd.stringutil;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,11 +18,18 @@ public class StringCalculator {
 
         if (number.startsWith("//")) {
             if (number.contains("[")) {
-                delimiter = getDelimiter(number);
+                List<String> delimiters = getDelimiter(number);
+                number = number.substring(number.indexOf("\n") + 1);
+                for (int i = 1; i < delimiters.size(); i++) {
+                    number = number.replaceAll(delimiters.get(i), delimiters.get(0));
+                }
+                delimiter = delimiters.get(0);
+
             } else {
                 delimiter = String.valueOf(number.charAt(2));
+                number = number.substring(number.indexOf("\n") + 1);
             }
-            number = number.substring(number.indexOf("\n") + 1);
+
         }
         String sanitized = replaceNewLine(number, delimiter);
         int[] numbers = Arrays.stream(sanitized.split(Pattern.quote(delimiter))).mapToInt(Integer::parseInt).filter(e -> e <= 1000).toArray();
@@ -35,8 +43,10 @@ public class StringCalculator {
         return sum;
     }
 
-    private String getDelimiter(String number) {
-        return number.substring(number.indexOf("[") + 1, number.indexOf("]"));
+    private List<String> getDelimiter(String number) {
+        String delimiterArr = number.split(Pattern.quote("\n"))[0].substring(2);
+        List<String> result = Arrays.stream(delimiterArr.split("\\]")).sequential().map(e -> e.replace("[", "")).collect(Collectors.toList());
+        return result;
     }
 
     public int getCalledCount() {
