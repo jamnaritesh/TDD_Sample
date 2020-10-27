@@ -7,13 +7,20 @@ public class StringCalculator {
     public int add(String number){
         if(number.equals(""))
         return 0;
-        String sanitized = replaceNewLine(number);
+        String delimiter = ","; // Default assume , as delimiter
+
+        if(number.startsWith("//"))
+        {
+         delimiter = String.valueOf(number.charAt(2));
+         number = number.substring(5,number.length());
+        }
+        String sanitized = replaceNewLine(number, delimiter);
         System.out.println(sanitized);
-        int sum = Arrays.stream(Arrays.stream(sanitized.split(",")).mapToInt(Integer::parseInt).toArray()).sum();
+        int sum = Arrays.stream(Arrays.stream(sanitized.split(delimiter)).mapToInt(Integer::parseInt).toArray()).sum();
         return sum;
     }
 
-    private String replaceNewLine(String str){
-        return str.replaceAll(Matcher.quoteReplacement("\n"),",");
+    private String replaceNewLine(String str, String delimiter){
+        return str.replaceAll(Matcher.quoteReplacement("\n"),delimiter);
     }
 }
