@@ -9,18 +9,21 @@ import java.util.stream.Collectors;
 
 public class StringCalculator {
     private int calledCount = 0;
+    private static String NEW_LINE = "\n";
+    private static String COMMA = ",";
+    private static String DELIMITER_START = "//";
 
     public int add(String number) throws InvalidInputException {
         calledCount++;
         if (number.equals(""))
             return 0;
 
-        String delimiter = ","; // Default assume , as delimiter
+        String delimiter = COMMA; // Default assume , as delimiter
 
-        if (number.startsWith("//")) {
+        if (number.startsWith(DELIMITER_START)) {
             if (number.contains("[")) {
                 List<String> delimiters = getDelimiter(number);
-                number = number.substring(number.indexOf("\n") + 1);
+                number = number.substring(number.indexOf(NEW_LINE) + 1);
                 for (int i = 1; i < delimiters.size(); i++) {
                     number = number.replaceAll(delimiters.get(i), delimiters.get(0));
                 }
@@ -28,7 +31,7 @@ public class StringCalculator {
 
             } else {
                 delimiter = String.valueOf(number.charAt(2));
-                number = number.substring(number.indexOf("\n") + 1);
+                number = number.substring(number.indexOf(NEW_LINE) + 1);
             }
 
         }
@@ -47,7 +50,7 @@ public class StringCalculator {
                     .stream(numbers)
                     .filter(e -> e < 0)
                     .mapToObj(Objects::toString)
-                    .collect(Collectors.joining(","));
+                    .collect(Collectors.joining(COMMA));
             throw new InvalidInputException("negatives not allowed :" + negativeNumbers);
         }
 
@@ -58,7 +61,7 @@ public class StringCalculator {
     }
 
     private List<String> getDelimiter(String number) {
-        String delimiterArr = number.split(Pattern.quote("\n"))[0].substring(2);
+        String delimiterArr = number.split(Pattern.quote(NEW_LINE))[0].substring(2);
         List<String> result = Arrays
                 .stream(delimiterArr.split("\\]"))
                 .map(e -> e.replace("[", ""))
@@ -71,6 +74,6 @@ public class StringCalculator {
     }
 
     private String replaceNewLine(String str, String delimiter) {
-        return str.replaceAll(Matcher.quoteReplacement("\n"), delimiter);
+        return str.replaceAll(Matcher.quoteReplacement(NEW_LINE), delimiter);
     }
 }

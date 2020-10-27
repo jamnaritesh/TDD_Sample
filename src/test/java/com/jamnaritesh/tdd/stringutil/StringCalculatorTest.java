@@ -34,7 +34,7 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void throwInvalidInputExceptionWhenInputHasNegativeNumbers() throws InvalidInputException {
+    public void throwInvalidInputExceptionWhenInputHasNegativeNumbers() {
         String message = "negatives not allowed :-1";
         try {
             calculator.add("-1,2,3");
@@ -44,7 +44,7 @@ public class StringCalculatorTest {
     }
 
     @Test
-    public void addAllNegativesToExceptionMessage() throws InvalidInputException {
+    public void addAllNegativesToExceptionMessage() {
         String message = "negatives not allowed :-1,-3";
         try {
             calculator.add("-1,2,-3");
