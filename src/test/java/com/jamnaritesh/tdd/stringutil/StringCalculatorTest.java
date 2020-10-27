@@ -19,4 +19,9 @@ public class StringCalculatorTest {
     public  void whenDoubleDigitThenReturnAddition(){
         Assert.assertEquals(3,calculator.add("1,2"));
     }
+
+    @Test
+    public void whenNewLineThenConsiderAsComma(){
+        Assert.assertEquals(6,calculator.add("1\n2,3"));
+    }
 }
