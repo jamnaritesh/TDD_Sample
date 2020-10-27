@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 
 public class StringCalculator {
-    public int add(String number){
+    public int add(String number) throws Exception {
         if(number.equals(""))
         return 0;
         String delimiter = ","; // Default assume , as delimiter
@@ -15,8 +15,14 @@ public class StringCalculator {
          number = number.substring(5,number.length());
         }
         String sanitized = replaceNewLine(number, delimiter);
-        System.out.println(sanitized);
-        int sum = Arrays.stream(Arrays.stream(sanitized.split(delimiter)).mapToInt(Integer::parseInt).toArray()).sum();
+        int[] numbers = Arrays.stream(sanitized.split(delimiter)).mapToInt(Integer::parseInt).toArray();
+
+        if(Arrays.stream(numbers).anyMatch(e -> e < 0)){
+            Integer negativeNumber = Arrays.stream(numbers).filter(e -> e < 0).findFirst().orElse(0);
+            throw new Exception("negatives not allowed :" + negativeNumber.toString());
+        }
+
+        int sum = Arrays.stream(numbers).sum();
         return sum;
     }
 
