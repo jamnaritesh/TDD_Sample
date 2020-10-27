@@ -27,6 +27,10 @@ public class StringCalculator {
         return sum;
     }
 
+    public int getCalledCount(){
+        return 0;
+    }
+
     private String replaceNewLine(String str, String delimiter) {
         return str.replaceAll(Matcher.quoteReplacement("\n"), delimiter);
     }

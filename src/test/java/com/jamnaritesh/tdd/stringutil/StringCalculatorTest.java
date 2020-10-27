@@ -54,4 +54,11 @@ public class StringCalculatorTest {
             Assert.assertEquals(message, e.getMessage());
         }
     }
+
+    @Test
+    public void onGetCountReceiveReturnAddCount() throws InvalidInputException {
+        StringCalculator calculator =  new StringCalculator();
+        calculator.add("");
+        Assert.assertEquals(1,calculator.getCalledCount());
+    }
 }
