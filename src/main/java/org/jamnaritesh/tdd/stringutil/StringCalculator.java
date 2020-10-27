@@ -19,7 +19,7 @@ public class StringCalculator {
             number = number.substring(5, number.length());
         }
         String sanitized = replaceNewLine(number, delimiter);
-        int[] numbers = Arrays.stream(sanitized.split(delimiter)).mapToInt(Integer::parseInt).toArray();
+        int[] numbers = Arrays.stream(sanitized.split(delimiter)).mapToInt(Integer::parseInt).filter(e -> e <= 1000).toArray();
 
         if (Arrays.stream(numbers).anyMatch(e -> e < 0)) {
             String negativeNumbers = Arrays.stream(numbers).filter(e -> e < 0).mapToObj(Objects::toString).collect(Collectors.joining(","));
